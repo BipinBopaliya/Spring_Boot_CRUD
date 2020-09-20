@@ -15,10 +15,12 @@ import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.SendTo;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 public class Producer {
 
@@ -78,26 +80,14 @@ public class Producer {
     public void Foo(){
     }
 @Bean
-public KStream<String, String> produce2() {
-//public KStream<String, String> produce2() {
+public Supplier<KStream<String, String>> produce2() {
     StreamsBuilder sb = new StreamsBuilder();
     KStream<String, String> stream = sb.stream("user-clicks");
-//    stream.mapValues((ValueMapper<String, String>) String::toUpperCase)
-//            .mapValues(Foo::new)
-//            .through(FOOS, Produced.with(Serdes.Integer(), new JsonSerde<Foo>() {
-//            }))
-//            .mapValues(Foo::getName)
-//            .groupByKey()
-//            .windowedBy(TimeWindows.of(1000))
-//            .reduce((value1, value2) -> value1 + value2, Materialized.as("windowStore"))
-//            .toStream()
-//            .map((windowedId, value) -> new KeyValue<>(windowedId.key(), value))
-//            .filter((i, s) -> s.length() > 40).to(streamingTopic2);
-//    stream.print(Printed.toSysOut());
     stream.map(
             (key, value) -> new KeyValue<String, String>("ABC", "DEF")
     );
     System.out.println("HI...HELLO");
-    return stream;
+    Supplier<KStream<String, String>> s1 = () -> stream;
+    return s1;
 }
 }

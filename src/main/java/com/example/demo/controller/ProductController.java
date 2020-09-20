@@ -24,7 +24,7 @@ public class ProductController {
         //return new ResponseEntity<Flux<Product>>((Flux<Product>) this.productService.getAllProducts(), HttpStatus.OK);
         System.out.println("Hello");
         Producer p = new Producer();
-        p.produce2();
+        p.produce();
         return new ResponseEntity(null, HttpStatus.OK);
     }
 

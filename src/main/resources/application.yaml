@@ -1,4 +1,13 @@
-spring.application.name: demo
-
-spring.cloud.stream.bindings.process-out-0:
-  destination: user-clicks
+spring.cloud.stream:
+  bindings:
+    process-out-0:
+      destination: user-clicks
+  kafka:
+    streams:
+      binder:
+        applicationId: demo
+        configuration:
+          commit.interval.ms: 100
+          default:
+            key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
